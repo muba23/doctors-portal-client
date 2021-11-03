@@ -26,7 +26,6 @@ const services = [
     }
 ]
 
-
 const Services = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
