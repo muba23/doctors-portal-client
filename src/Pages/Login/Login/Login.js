@@ -6,7 +6,7 @@ import login from '../../../images/login.png';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const {user, loginUser, isLoading, authError} = useAuth();
+    const {user, loginUser,signInWithGoogle, isLoading, authError} = useAuth();
 
     const location = useLocation();
     const history = useHistory();
@@ -22,6 +22,10 @@ const Login = () => {
         loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
     }
+
+    const handleGoogleSignIn = () =>{
+        signInWithGoogle(location, history)
+    }
     return (
         <Container>
             <Grid container spacing={2}>
@@ -35,19 +39,21 @@ const Login = () => {
                 id="standard-basic" 
                 label="Your Email" 
                 name="email"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
                 variant="standard" />
             <TextField 
                 sx={{width: '75%', m:1}}
                 id="standard-basic" 
                 type="password"
                 name="password"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
                 label="Your Password" 
                 variant="standard" />
                 
                 <Button sx={{width: '75%', m:1}} type="submit" variant="contained">Login</Button>
-                <NavLink style={{textDecoration: 'none'}} to="/register"><Button>New User? Please Register</Button></NavLink>
+                <NavLink style={{textDecoration: 'none'}} to="/register">
+                    <Button variant="text">New User? Please Register</Button>
+                    </NavLink>
                 {isLoading && <CircularProgress/>}
                 
                 {user?.email && 
@@ -55,7 +61,8 @@ const Login = () => {
                 {authError && <Alert severity="error">{authError}</Alert>
 }
             </form>
-            
+            <p>------------------------</p>
+            <Button onClick={handleGoogleSignIn}  variant="contained">Sign In Using Google</Button>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img style={{width: '100%'}} src={login} alt="" />
